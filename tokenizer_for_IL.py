@@ -68,6 +68,45 @@ def tokenize(list_s):
                     initial_pos = wrds_len
     return tkns
 
+def tokenize_text(text):
+    sentences = re.findall('.*?।|.*?\n', text + '\n', re.UNICODE)
+    proper_sentences = list()
+    for index, sentence in enumerate(sentences):
+        if sentence.strip() != '':
+            list_tokens = tokenize(sentence.split())
+            end_sentence_markers = [index + 1 for index, token in enumerate(
+                list_tokens) if token in ['?', '۔', '؟', '।', '!', '|', '.']]
+            updated_sentence_markers = list()
+            false_flag = False
+            true_start = 0
+            for start, end in zip(end_sentence_markers, end_sentence_markers[1:]):
+                if end - start > 2:
+                    if not false_flag and not true_start:
+                        updated_sentence_markers.append(start)
+                    else:
+                        updated_sentence_markers.append(true_start)
+                        true_start = 0
+                        false_flag = False
+                else:
+                    false_flag = True
+                    true_start = start
+            updated_sentence_markers += [len(list_tokens)]
+            if len(list_tokens) >= 2 and list_tokens[-1] in punctuations and len(updated_sentence_markers) and list_tokens[updated_sentence_markers[-1] - 1] == list_tokens[-2]:
+                updated_sentence_markers[-1] += 2
+# '.' -> depends on the domain judiciary data it is not a good idea to split on dots
+            if len(updated_sentence_markers) > 0:
+                end_sentence_markers_with_sentence_end_positions = [
+                    0] + updated_sentence_markers
+                sentence_boundaries = list(zip(
+                    end_sentence_markers_with_sentence_end_positions, end_sentence_markers_with_sentence_end_positions[1:]))
+                for start, end in sentence_boundaries:
+                    individual_sentence = ' '.join(list_tokens[start: end])
+                    proper_sentences.append(individual_sentence)
+            else:
+                proper_sentences.append(' '.join(list_tokens))
+    return " ".join(proper_sentences)
+
+
 
 def read_file_and_tokenize(input_file, lang_type=0):
     file_read = open(input_file, 'r', encoding='utf-8')
