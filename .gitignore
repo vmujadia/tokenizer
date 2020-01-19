@@ -1,0 +1,11 @@
+*.pyc
+build/*
+*.egg-info/*
+.vscode/*
+dist/*
+.coverage
+coverage\.*
+IL_Tokenizer*
+.pytest_cache/*
+venv/*
+logs/*
