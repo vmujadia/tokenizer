@@ -9,5 +9,5 @@ def tokenize(sentence, to_lower=False):
 def tokenize_text(text, to_lower=False):
     if to_lower:
         text = text.lower()
-    text = text.split()
-    return " ".join(_tokenizer_ils.tokenize_text(text))
+    #text = text.split()
+    return _tokenizer_ils.tokenize_text(text)

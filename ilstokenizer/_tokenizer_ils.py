@@ -103,5 +103,5 @@ def tokenize_text(text):
                     proper_sentences.append(individual_sentence)
             else:
                 proper_sentences.append(' '.join(list_tokens))
-    return " ".join(proper_sentences)
+    return proper_sentences
 
