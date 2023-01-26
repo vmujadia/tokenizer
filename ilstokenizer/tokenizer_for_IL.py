@@ -68,6 +68,8 @@ def tokenize(list_s):
 
 def tokenize_text(text):
     sentences = re.findall('.*?।|.*?\n', text + '\n', re.UNICODE)
+    text = text.replace('.',' . ')
+    text = " ".join(text.split())
     proper_sentences = list()
     for index, sentence in enumerate(sentences):
         if sentence.strip() != '':
