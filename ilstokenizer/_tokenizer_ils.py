@@ -79,7 +79,7 @@ def tokenize_text(text, language='eng'):
             
             for index, token in enumerate(list_tokens):
                 if token in ['?', '۔', '؟', '।', '!', '|', '.'] and list_tokens[index-1] not in ignore_sentence_end_list:
-                    if list_tokens[index-1].isdigit() and list_tokens[index+1].isdigit():
+                    if index>0 and len(list_tokens)<index and list_tokens[index-1].isdigit() and list_tokens[index+1].isdigit():
                         pass
                     else:
                         if language!='eng':
