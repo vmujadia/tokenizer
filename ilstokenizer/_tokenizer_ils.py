@@ -37,7 +37,7 @@ tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)
 get_token = re.compile(tok_regex)
 
 
-def tokenize(list_s):
+def tokenize(list_s, language='eng'):
     tkns = []
     for wrds in list_s:
         wrds_len = len(wrds)
